@@ -126,12 +126,14 @@
             //app.getDollarRates();
            // app.saveDollarRates();
             //app.dollarRates = JSON.parse(app.dollarRates);
+            console.log("no");
         } else {
             /* The user is using the app for the first time.
              */
     //        app.getDollarRates();
            // console.log(app.dollarRates);
       //      app.saveDollarRates();
+            console.log("yes");
         }
     };
     
