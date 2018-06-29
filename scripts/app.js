@@ -123,20 +123,17 @@
     app.startUp = () => {
         app.dollarRates = localStorage.dollarRates;
         if (app.dollarRates) {
-            //app.getDollarRates();
-           // app.saveDollarRates();
-            //app.dollarRates = JSON.parse(app.dollarRates);
+
             console.log("no");
         } else {
             /* The user is using the app for the first time.
              */
-    //        app.getDollarRates();
-           // console.log(app.dollarRates);
-      //      app.saveDollarRates();
+            app.getDollarRates();
+            app.saveDollarRates();
             console.log("yes");
         }
     };
-    
+
     app.startUp();
     console.log(app.dollarRates);
     //app.getCurrencyCodes();
