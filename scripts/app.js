@@ -181,7 +181,7 @@ document.getElementById('result').setAttribute("value", 'converting...');
     //app.getAllCountries();
     //app.getAllCurrencies();
     //app.getConversionRate();
-
+    
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
             .register('./service-worker.js')
