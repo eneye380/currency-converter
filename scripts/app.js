@@ -4,9 +4,11 @@
 
     let app = {
         isLoading: true,
+        offline: true,
         countries: [],
         currencies: [],
         dollarRates: [],
+        newRates:{},
         spinner: document.querySelector('.loader'),
     };
 
@@ -64,6 +66,8 @@
     app.saveDollarRates = () => {
         let dollarRates = JSON.stringify(app.dollarRates);
         localStorage.dollarRates = dollarRates;
+        let newRates = JSON.stringify(app.newRates);
+        localStorage.newRates = newRates;
     }
 
     //fetch doller rates for all currencies
@@ -77,7 +81,13 @@
                 app.currencies = Object.keys(myJson.results);
                 app.currencies = app.currencies.sort();
                 let sequence = Promise.resolve();
+                app.dollarRates = [];
+                app.newRates = {};
                 app.currencies.some((to) => {
+                    i++;
+                    if (i === 3) {
+                        return to = 'ALL';
+                    }
                     let conversion = `USD_${to}`;
                     let url = `https://free.currencyconverterapi.com/api/v5/convert?q=${conversion}&compact=ultra`;
                     /**
@@ -91,12 +101,14 @@
                             });
                     }).then(function (myJson) {
                         app.dollarRates.push(myJson);
-                        console.log(myJson);
+                        app.newRates[conversion] = myJson[conversion];
+                        app.saveDollarRates();
+
                     });
                     //return to = 'GBP';
                 });
             });
-        app.saveDollarRates();
+
     }
 
 
@@ -106,6 +118,8 @@
         fetch(url)
             .then(function (response) {
                 return response.json();
+            }).catch(() => {
+                console.log('eeee');
             })
             .then(function (myJson) {
                 let cur_sym = `${from}_${to}`;
@@ -122,23 +136,34 @@
     //app start-up code
     app.startUp = () => {
         app.dollarRates = localStorage.dollarRates;
-        if (app.dollarRates) {
-
+        app.newRates = localStorage.newRates;
+        if (app.newRates) {
+            app.dollarRates = JSON.parse(app.dollarRates);
+            console.log('final',app.dollarRates);
+            app.newRates = JSON.parse(app.newRates);
+            console.log('final1', app.newRates);
+            console.log('final2', app.newRates['USD_AED']);
             console.log("no");
         } else {
             /* The user is using the app for the first time.
              */
             app.getDollarRates();
-            app.saveDollarRates();
+
             console.log("yes");
         }
     };
 
     app.startUp();
-    console.log(app.dollarRates);
+    
     //app.getCurrencyCodes();
     //app.saveDollarRates();
     //app.getAllCountries();
     //app.getAllCurrencies();
     //app.getConversionRate();
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register('./service-worker.js')
+            .then(function () { console.log('Service Worker Registered'); });
+    }
 })();
