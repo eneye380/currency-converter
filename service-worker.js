@@ -1,5 +1,5 @@
-var cacheName = 'currencyConverter-v6';
-var dataCacheName = 'currencyConverterData-v6';
+var cacheName = 'currencyConverter-v11';
+var dataCacheName = 'currencyConverterData-v11';
 var filesToCache = [
     '/',
     '/index.html',

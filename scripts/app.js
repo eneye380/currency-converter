@@ -1,5 +1,5 @@
 (function () {
-
+'use strict';
     console.log("Testing...");
 
     let app = {
@@ -127,8 +127,8 @@ document.getElementById('result').setAttribute("value", 'converting...');
                 if (response) {
                     response.json().then(function updateFromCache(json) {
                         let cur_sym = `${from}_${to}`;
-                        app.displayConversionResult(myJson[cur_sym]);
-                        console.log(myJson);
+                        app.displayConversionResult(json[cur_sym]);
+                        console.log('Cache Data',json);
                     });
                 }
             });
@@ -143,7 +143,9 @@ document.getElementById('result').setAttribute("value", 'converting...');
             .then(function (myJson) {
                 let cur_sym = `${from}_${to}`;
                 app.displayConversionResult(myJson[cur_sym]);
-                console.log(myJson);
+                console.log('Network Data',myJson);
+            }).catch(() => {
+                console.log('No Data!');
             });
     }
     //get offline conversion rate
@@ -154,14 +156,13 @@ document.getElementById('result').setAttribute("value", 'converting...');
 
     //app start-up code
     app.startUp = () => {
+        console.log('idb',indexedDB);
         app.dollarRates = localStorage.dollarRates;
         app.newRates = localStorage.newRates;
         if (app.newRates) {
             app.dollarRates = JSON.parse(app.dollarRates);
-            console.log('final', app.dollarRates);
             app.newRates = JSON.parse(app.newRates);
-            console.log('final1', app.newRates);
-            console.log('final2', app.newRates['USD_AED']);
+            console.log('Conversion rates', app.newRates);
             console.log("no");
         } else {
             /* The user is using the app for the first time.
@@ -173,6 +174,7 @@ document.getElementById('result').setAttribute("value", 'converting...');
     };
 
     app.startUp();
+    
 
     //app.getCurrencyCodes();
     //app.saveDollarRates();
