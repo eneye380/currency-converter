@@ -1,5 +1,5 @@
-let cacheName = 'currencyConverter-v1';
-let dataCacheName = 'currencyConverterData-v1';
+let cacheName = 'currencyConverter-v2';
+let dataCacheName = 'currencyConverterData-v2';
 let filesToCache = [
     '/',
     '/currency-converter/',
