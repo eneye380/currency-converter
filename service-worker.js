@@ -1,16 +1,13 @@
-let cacheName = 'currencyConverter-v11';
-let dataCacheName = 'currencyConverterData-v11';
+let cacheName = 'currencyConverter-v1';
+let dataCacheName = 'currencyConverterData-v1';
 let filesToCache = [
     '/',
     '/index.html',
     '/scripts/app.js',
     '/styles/style.css'
 ];
-// This is what our customer data looks like.
-const customerData = [
-    { url: "444-44-4444", name: "Bill", age: 35, email: "bill@company.com" },
-    { url: "555-55-5555", name: "Donna", age: 32, email: "donna@home.org" }
-];
+//create indexedDb
+
 function createDb() {
     //check for support
     if (!(indexedDB)) {
@@ -28,26 +25,14 @@ function createDb() {
     request.onupgradeneeded = function (event) {
         let db = event.target.result;
 
-        // Create an objectStore to hold information about our customers. We're
-        // going to use "ssn" as our key path because it's guaranteed to be
-        // unique - or at least that's what I was told during the kickoff meeting.
+        // Create an objectStore to hold information.
         let objectStore = db.createObjectStore("rates", { keyPath: "url" });
 
-        // Create an index to search customers by email. We want to ensure that
-        // no two customers have the same email, so use a unique index.
         objectStore.createIndex("url", "url", { unique: true });
 
-        // Use transaction oncomplete to make sure the objectStore creation is 
-        // finished before adding data into it.
-        /**objectStore.transaction.oncomplete = function (event) {
-            // Store values in the newly created objectStore.
-            let customerObjectStore = db.transaction("rates", "readwrite").objectStore("rates");
-            customerData.forEach(function (customer) {
-                customerObjectStore.add(customer);
-            });
-        };*/
     };
 }
+//add to indexedDb 
 function addData(item) {
     let db;
     let request = indexedDB.open("currency-converter-db");

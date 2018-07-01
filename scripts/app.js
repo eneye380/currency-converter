@@ -119,7 +119,7 @@ document.getElementById('result').setAttribute("value", 'converting...');
         //Cache strategy
         if ('caches' in window) {
             /*
-             * Check if the service worker has already cached this city's currency
+             * Check if the service worker has already cached this currency
              * conversion rate data. If the service worker has the data, then display the cached
              * data while the app fetches the latest data.
              */
@@ -175,12 +175,6 @@ document.getElementById('result').setAttribute("value", 'converting...');
 
     app.startUp();
     
-
-    //app.getCurrencyCodes();
-    //app.saveDollarRates();
-    //app.getAllCountries();
-    //app.getAllCurrencies();
-    //app.getConversionRate();
     
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
