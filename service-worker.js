@@ -2,9 +2,10 @@ let cacheName = 'currencyConverter-v1';
 let dataCacheName = 'currencyConverterData-v1';
 let filesToCache = [
     '/',
-    '/index.html',
-    '/scripts/app.js',
-    '/styles/style.css'
+    '/currency-converter/',
+    '/currency-converter/index.html',
+    '/currency-converter/scripts/app.js',
+    '/currency-converter/styles/style.css'
 ];
 //create indexedDb
 
